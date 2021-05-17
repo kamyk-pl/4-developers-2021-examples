@@ -1,0 +1,120 @@
+<!doctype html>
+<!--
+Copyright 2020 The Immersive Web Community Group
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+the Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+-->
+
+<!--Examples is based on https://immersive-web.github.io/webxr-samples/ar-barebones.html-->
+<html>
+<head>
+    <title>First Step</title>
+</head>
+<body>
+<div id="overlay">
+    <header>
+        <summary>My first AR example</summary>
+        <p>
+            <a class="back" href="./index.html">Back</a>
+        </p>
+        <button id="xr-button" disabled></button>
+    </header>
+</div>
+<script type="module">
+    // XR globals.
+    let xrButton = document.getElementById('xr-button');
+    let xrSession = null;
+    let xrRefSpace = null;
+    // WebGL scene globals.
+    let gl = null;
+
+    function initXR() {
+        if (!window.isSecureContext) {
+            let message = "WebXR unavailable due to insecure context";
+            alert("AR experience requires https connection")
+        }
+
+        if (navigator.xr) {
+            xrButton.addEventListener('click', onButtonClicked);
+            navigator.xr.addEventListener('devicechange', checkSupportedState);
+            checkSupportedState();
+        }
+    }
+
+    function checkSupportedState() {
+        navigator.xr.isSessionSupported('immersive-ar').then((supported) => {
+            if (supported) {
+                xrButton.innerHTML = 'Enter AR';
+            } else {
+                xrButton.innerHTML = 'AR not found';
+            }
+            xrButton.disabled = !supported;
+        });
+    }
+
+    function onButtonClicked() {
+        if (!xrSession) {
+            navigator.xr.requestSession('immersive-ar', {}).then(onSessionStarted, () => {
+                alert("Failed to start immersive AR session.");
+                console.error(ex.message);
+            });
+        }
+    }
+
+    function onSessionStarted(session) {
+        xrSession = session;
+
+        session.addEventListener('end', onSessionEnded);
+        let canvas = document.createElement('canvas');
+        gl = canvas.getContext('webgl', {
+            xrCompatible: true
+        });
+        session.updateRenderState({baseLayer: new XRWebGLLayer(session, gl)});
+        session.requestReferenceSpace('local').then((refSpace) => {
+            xrRefSpace = refSpace;
+            session.requestAnimationFrame(onXRFrame);
+        });
+    }
+
+    function onSessionEnded(event) {
+        xrSession = null;
+        xrButton.innerHTML = 'Enter AR';
+        gl = null;
+        console.log('session ended')
+    }
+
+    function onXRFrame(t, frame) {
+        let session = frame.session;
+        session.requestAnimationFrame(onXRFrame);
+        let pose = frame.getViewerPose(xrRefSpace);
+
+        if (pose) {
+            const width = session.renderState.baseLayer.framebufferWidth;
+            const height = session.renderState.baseLayer.framebufferHeight;
+            gl.enable(gl.SCISSOR_TEST);
+            gl.bindFramebuffer(gl.FRAMEBUFFER, session.renderState.baseLayer.framebuffer);
+            gl.scissor(width / 4, height / 4, width / 2, height / 2);
+            gl.clearColor(0, 255, 0, 0.5);
+            gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+        }
+    }
+
+    initXR();
+</script>
+</body>
+</html>

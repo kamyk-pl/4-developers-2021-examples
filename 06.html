@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Three.js Clock</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link type="text/css" rel="stylesheet" href="old/main.css">
+</head>
+<body>
+
+<div id="info">
+    Three.js clock
+</div>
+
+<script type="module">
+
+    import * as THREE from './js/three.module.js';
+    import {ARButton} from './js/ARButton.js';
+
+    let camera, scene, renderer, controller;
+    let timeMesh;
+    let font;
+
+    init();
+    animate();
+
+
+    function generateTimeText(font) {
+        if (!font) {
+            return null;
+        }
+        const hour = new THREE.TextGeometry(new Date().toLocaleTimeString('pl-pl'), {
+            font: font,
+            size: 0.08,
+            height: 0.008,
+            curveSegments: 3,
+            bevelEnabled: false,
+        });
+
+
+        var materialFront = new THREE.MeshBasicMaterial({color: 0x123456});
+        var mesh = new THREE.Mesh(hour, materialFront);
+        mesh.position.set(-0.2, 0.2, -0.8).applyMatrix4(controller.matrixWorld);
+        return mesh;
+    }
+
+    function init() {
+
+        const container = document.createElement('div');
+        document.body.appendChild(container);
+        scene = new THREE.Scene();
+        camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.01, 20);
+
+        renderer = new THREE.WebGLRenderer({antialias: true, alpha: true});
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.xr.enabled = true;
+
+        const light = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
+        light.position.set(0.5, 1, 0.25);
+        scene.add(light);
+
+        container.appendChild(renderer.domElement);
+        document.body.appendChild(ARButton.createButton(renderer, {}));
+        function onSelect() {
+            const loader = new THREE.FontLoader();
+            loader.load('res/helvetiker_bold.typeface.json', function (_font) {
+                font = _font
+            });
+        }
+
+        controller = renderer.xr.getController(0);
+        controller.addEventListener('select', onSelect);
+        scene.add(controller);
+
+        window.addEventListener('resize', onWindowResize);
+    }
+
+    function onWindowResize() {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+
+    function animate() {
+        renderer.setAnimationLoop(render);
+    }
+
+    function render() {
+        scene.remove(timeMesh)
+        if (font) {
+            timeMesh = generateTimeText(font);
+            scene.add(timeMesh);
+        }
+        renderer.render(scene, camera);
+    }
+
+</script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Three.js example with images</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link type="text/css" rel="stylesheet" href="old/main.css">
+</head>
+<body>
+
+<div id="info">
+    Three.js example with images
+</div>
+
+<script type="module">
+
+    import * as THREE from './js/three.module.js';
+    import {ARButton} from './js/ARButton.js';
+
+    let camera, scene, renderer;
+
+    init();
+    animate();
+
+    function init() {
+
+        const container = document.createElement('div');
+        document.body.appendChild(container);
+        scene = new THREE.Scene();
+        camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.01, 20);
+
+        renderer = new THREE.WebGLRenderer({antialias: true, alpha: true});
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.xr.enabled = true;
+
+        const light = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
+        light.position.set(0.5, 1, 0.25);
+        scene.add(light);
+
+        container.appendChild(renderer.domElement);
+        document.body.appendChild(ARButton.createButton(renderer, {}));
+
+
+        const materials = [
+            new THREE.MeshPhongMaterial({map: new THREE.TextureLoader().load('res/ec.png')}),
+            new THREE.MeshPhongMaterial({map: new THREE.TextureLoader().load('res/ite.png')}),
+            new THREE.MeshBasicMaterial({color: 0xff0000}),
+            new THREE.MeshBasicMaterial({color: 0x00ff00}),
+            new THREE.MeshPhongMaterial({map: new THREE.TextureLoader().load('res/rat.png')}),
+            new THREE.MeshBasicMaterial({color: 0x00ffff}),
+        ];
+
+
+        const cube = new THREE.Mesh(new THREE.BoxBufferGeometry(0.05, 0.05, 0.05), materials);
+        cube.position.set(0, 0, -0.3);
+        scene.add(cube);
+
+        window.addEventListener('resize', onWindowResize);
+    }
+
+    function onWindowResize() {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+
+    function animate() {
+        renderer.setAnimationLoop(render);
+    }
+
+    function render() {
+        renderer.render(scene, camera);
+    }
+
+</script>
+</body>
+</html>
