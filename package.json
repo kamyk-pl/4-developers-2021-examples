@@ -1,0 +1,24 @@
+{
+  "name": "ar-webxr-threejs-examples",
+  "version": "1.0.0",
+  "description": "Examples for Let's invite A(R)lice from Wonderland to our browsers talk at 4Developers 2021",
+  "main": "index.html",
+  "scripts": {
+    "serve": "http-server -S -C local/cert.pem -K local/key.pem"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/kamyk_pl/examples.git"
+  },
+  "keywords": [
+    "ar",
+    "webxr",
+    "threejs"
+  ],
+  "author": "Paweł Kamiński",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/kamyk_pl/examples#readme",
+  "dependencies": {
+    "http-server": "^0.12.3"
+  }
+}
