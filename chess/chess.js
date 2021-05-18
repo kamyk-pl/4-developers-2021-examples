@@ -1,6 +1,6 @@
 import * as THREE from 'three';
-import {ARButton} from '../js/ARButton.js';
-import {buildPawn, buildKnight, buildQueen, buildBishop, buildRock, buildKing, buildCube} from "./figury.js";
+import {ARButton} from '../three/examples/jsm/webxr/ARButton.js';
+import {buildPawn, buildKnight, buildQueen, buildBishop, buildRock, buildKing, buildCube} from "./pawns.js";
 
 
 let camera, scene, renderer, reticle;
