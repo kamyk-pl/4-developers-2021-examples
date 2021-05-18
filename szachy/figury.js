@@ -1,4 +1,4 @@
-import * as THREE from '../js/three.module.js';
+import * as THREE from 'three';
 
 
 /////////
@@ -18,9 +18,9 @@ const materialWhite = new THREE.MeshStandardMaterial({
 });
 
 let materialBlackBoard = new THREE.MeshStandardMaterial({
-    color: 0x677a7c,
+    color: 0x5b360d,
     metalness: 1.0,
-    roughness: 1.0,
+    roughness: 0.6,
     emissive: 0x677a7c
 });
 

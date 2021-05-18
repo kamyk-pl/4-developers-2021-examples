@@ -1,4 +1,4 @@
-import * as THREE from '../js/three.module.js';
+import * as THREE from 'three';
 import {ARButton} from '../js/ARButton.js';
 import {buildPawn, buildKnight, buildQueen, buildBishop, buildRock, buildKing, buildCube} from "./figury.js";
 
@@ -32,14 +32,6 @@ const zDesc = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
 
 const pawnArray = [];
 
-// let acceptNext = false;
-// let acceptDown = false;
-// let acceptForward = false;
-// let deltaStep = 0.01;
-// let step = 0;
-// let acceptUp = false;
-// let recordNo = -1;
-// let amplitude = 5.5;
 
 
 var step = 0;
@@ -77,6 +69,10 @@ function init() {
     document.body.appendChild(container);
     scene = new THREE.Scene();
     camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.01, 20);
+    const hemiLight = new THREE.HemisphereLight( 0xffffff, 0x444444, 0.6 );
+    hemiLight.position.set( 0, 200, 0 );
+    scene.add( hemiLight );
+   // scene.add( light );
     renderer = new THREE.WebGLRenderer({antialias: true, alpha: true});
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -85,9 +81,7 @@ function init() {
     document.body.appendChild(ARButton.createButton(renderer, {requiredFeatures: ['local', 'hit-test']}));
 
 
-    const  light = new THREE.HemisphereLight( 0xffffff, 0xbbbbff, 1 );
-    light.position.set( 0.5, 1, 0.25 );
-    scene.add( light );
+
 
     reticle = new THREE.Mesh(
         new THREE.RingGeometry(0.15, 0.2, 32).rotateX(-Math.PI / 2),
@@ -97,21 +91,22 @@ function init() {
     reticle.visible = false;
     scene.add(reticle);
 
-    function onSelect() {
-        if (reticle.visible) {
-            drawBoard(reticle.matrix)
+   // function onSelect() {
+    //    if (reticle.visible) {
+            drawBoard()
 
             setTimeout(() => {
                 acceptNext = true;
             }, 2 * 1000)
-            controller.removeEventListener('select', onSelect);
-            reticle.visible =   false;
-       }
-    }
+            //controller.removeEventListener('select', onSelect);
+            //reticle.visible =   false;
+   //    }
+   // }
 
     controller = renderer.xr.getController(0);
-    controller.addEventListener('select', onSelect);
+   // controller.addEventListener('select', onSelect);
     scene.add(controller);
+
     window.addEventListener('resize', onWindowResize);
 
 
@@ -249,11 +244,6 @@ function drawBoard(pos) {
                     pawn.position.x = item.position.x;
                     pawn.position.y = item.position.y + knightDeltaY;
                     pawn.position.z = item.position.z;
-                    if (zDesc[countZ] == 'g') {
-
-                        console.log('>>>>>>>>>>>>>> g8x', pawn.position.x)
-                        console.log('>>>>>>>>>>>>>> g8z', pawn.position.z)
-                    }
                 } else if (zDesc[countZ] == 'c' || zDesc[countZ] == 'f') {
                     pawn = bishopWhite.clone();
                     pawn.name = zDesc[countZ] + xDesc[countX]
@@ -334,12 +324,6 @@ function drawBoard(pos) {
                     pawn.position.x = item.position.x;
                     pawn.position.y = item.position.y + bishopDeltaY;
                     pawn.position.z = item.position.z;
-
-                    if (zDesc[countZ] == 'c') {
-
-                        console.log('>>>>>>>>>>>>>> c8x', pawn.position.x)
-                        console.log('>>>>>>>>>>>>>> c8z', pawn.position.z)
-                    }
                 } else if (zDesc[countZ] == 'd') {
                     pawn = queenBlack.clone();
                     pawn.name = zDesc[countZ] + xDesc[countX]
@@ -369,12 +353,13 @@ function drawBoard(pos) {
 
 
     console.log('pos: ', pos)
-    scene.position.setFromMatrixPosition(pos);
-    scene.position.z = scene.position.z - 0.8;
-    scene.rotation.z = Math.PI
+ //   scene.position.setFromMatrixPosition(pos);
+    scene.position.z = scene.position.z - 2;
+    scene.rotation.x = Math.PI/6
 
     //scene.position.set( 0, 3, -3 ).applyMatrix4( controller.matrixWorld );
    // scene.rotation.z = Math.PI ;
+
 }
 
 

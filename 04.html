@@ -4,18 +4,28 @@
     <title>Three.js example with interaction</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <link type="text/css" rel="stylesheet" href="old/main.css">
+    <link type="text/css" rel="stylesheet" href="css/main.css">
+    <script type="importmap">
+    {
+      "imports": {
+        "three": "./three/build/three.module.js"
+      }
+    }
+
+    </script>
 </head>
 <body>
 
 <div id="info">
-    Three.js example with interaction
+
+    <p>Three.js example with interaction</p>
+    <a href="/">Back</a>
 </div>
 
 <script type="module">
 
-    import * as THREE from './js/three.module.js';
-    import {ARButton} from './js/ARButton.js';
+    import * as THREE from 'three';
+    import {ARButton} from './three/examples/jsm/webxr/ARButton.js';
 
     let camera, scene, renderer, controller;
 
