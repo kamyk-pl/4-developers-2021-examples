@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Three.js clock</title>
+    <title>Three.js example with video</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <link type="text/css" rel="stylesheet" href="css/main.css">
@@ -12,12 +12,27 @@
       }
     }
 
+
+
     </script>
 </head>
 <body>
 
+<video id="video1" loop muted crossOrigin="anonymous" playsinline style="display:none" autoplay>
+    <source src="res/video1.mp4">
+</video>
+
+<video id="video2" loop muted crossOrigin="anonymous" playsinline style="display:none" autoplay>
+    <source src="res/video2.mp4">
+</video>
+
+<video id="video3" loop muted crossOrigin="anonymous" playsinline style="display:none" autoplay>
+    <source src="res/video3.mp4">
+</video>
+
+
 <div id="info">
-    <p>Three.js clock</p>
+    <p>Three.js example with animation</p>
     <a href="/">Back</a>
 </div>
 
@@ -27,31 +42,10 @@
     import {ARButton} from './three/examples/jsm/webxr/ARButton.js';
 
     let camera, scene, renderer, controller;
-    let timeMesh;
-    let font;
+    let videos = [];
 
     init();
     animate();
-
-
-    function generateTimeText(font) {
-        if (!font) {
-            return null;
-        }
-        const hour = new THREE.TextGeometry(new Date().toLocaleTimeString('pl-pl'), {
-            font: font,
-            size: 0.08,
-            height: 0.008,
-            curveSegments: 3,
-            bevelEnabled: false,
-        });
-
-
-        var materialFront = new THREE.MeshBasicMaterial({color: 0x123456});
-        var mesh = new THREE.Mesh(hour, materialFront);
-        mesh.position.set(-0.2, 0.2, -0.8).applyMatrix4(controller.matrixWorld);
-        return mesh;
-    }
 
     function init() {
 
@@ -71,11 +65,44 @@
 
         container.appendChild(renderer.domElement);
         document.body.appendChild(ARButton.createButton(renderer, {}));
+
+
         function onSelect() {
-            const loader = new THREE.FontLoader();
-            loader.load('res/helvetiker_bold.typeface.json', function (_font) {
-                font = _font
-            });
+            if (videos.length % 3 == 0) {
+                const video = document.getElementById('video1');
+                video.play();
+                const planeGeometry = new THREE.PlaneGeometry(0.1, 0.1, 1, 1);
+                const videoMesh = new THREE.Mesh(planeGeometry, new THREE.MeshPhongMaterial({
+                    map: new THREE.VideoTexture(video),
+                    side: THREE.DoubleSide
+                }),);
+
+                videoMesh.position.set(0, 0, -0.3).applyMatrix4(controller.matrixWorld);
+                videos.push(videoMesh)
+                scene.add(videoMesh);
+            } else if (videos.length % 3 === 1) {
+                const video = document.getElementById('video2');
+                video.play();
+                const planeGeometry = new THREE.PlaneGeometry(0.1, 0.1, 1, 1);
+                const videoMesh = new THREE.Mesh(planeGeometry, new THREE.MeshPhongMaterial({
+                    map: new THREE.VideoTexture(video),
+                    side: THREE.DoubleSide
+                }),);
+
+                videoMesh.position.set(0, 0, -0.3).applyMatrix4(controller.matrixWorld);
+                videos.push(videoMesh)
+                scene.add(videoMesh);
+            } else if (videos.length % 3 === 2) {
+                const video = document.getElementById('video3');
+                video.play();
+                const planeGeometry = new THREE.PlaneGeometry(0.1, 0.1, 1, 1);
+                const videoMesh = new THREE.Mesh(planeGeometry, new THREE.MeshPhongMaterial({map: new THREE.VideoTexture(video)}),);
+
+                videoMesh.position.set(0, 0, -0.3).applyMatrix4(controller.matrixWorld);
+                videos.push(videoMesh)
+                scene.add(videoMesh);
+            }
+
         }
 
         controller = renderer.xr.getController(0);
@@ -96,11 +123,17 @@
     }
 
     function render() {
-        scene.remove(timeMesh)
-        if (font) {
-            timeMesh = generateTimeText(font);
-            scene.add(timeMesh);
-        }
+        videos.forEach((v, i) => {
+                if (i % 3 == 0) {
+                    v.rotation.x = v.rotation.x - Math.PI / 300
+                } else if (i % 3 == 1) {
+                    v.rotation.y = v.rotation.y - Math.PI / 300
+
+                } else if (i % 3 == 2) {
+                    v.rotation.z = v.rotation.z - Math.PI / 300
+                }
+            }
+        )
         renderer.render(scene, camera);
     }
 
