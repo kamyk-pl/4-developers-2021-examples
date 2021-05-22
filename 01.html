@@ -21,14 +21,14 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 -->
 
 <!--Examples is based on https://immersive-web.github.io/webxr-samples/ar-barebones.html-->
-<html>
+<html lang="en">
 <head>
-    <title>First Step</title>
- </head>
+    <title>Pure JS AR Example</title>
+</head>
 <body>
 <div id="overlay">
     <div id="info">
-        <p>My first AR example</p>
+        <p>Pure JS AR Example</p>
         <a class="back" href="./index.html">Back</a>
         <br>
         <button id="xr-button" disabled></button>
@@ -44,7 +44,6 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
     function initXR() {
         if (!window.isSecureContext) {
-            let message = "WebXR unavailable due to insecure context";
             alert("AR experience requires https connection")
         }
 
@@ -90,7 +89,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         });
     }
 
-    function onSessionEnded(event) {
+    function onSessionEnded() {
         xrSession = null;
         xrButton.innerHTML = 'Enter AR';
         gl = null;
