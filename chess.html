@@ -89,7 +89,7 @@
         const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444, 0.6);
         hemiLight.position.set(10, 10, 10);
         //scene.add(hemiLight);
-        scene.add( new THREE.AmbientLight( 0x666666 ) );
+        scene.add(new THREE.AmbientLight(0x666666));
         renderer = new THREE.WebGLRenderer({antialias: true, alpha: true});
         renderer.setPixelRatio(window.devicePixelRatio);
         renderer.setSize(window.innerWidth, window.innerHeight);
@@ -104,24 +104,24 @@
         );
         reticle.matrixAutoUpdate = false;
 
-       // scene.add(reticle);
+        scene.add(reticle);
 
-        // function onSelect() {
-        //    if (reticle.visible) {
-        drawBoard(undefined,  scene, board, sizes);
-        placed = true;
+        function onSelect() {
+            if (reticle.visible) {
+                placed = true;
+                reticle.visible = false;
+                controller.removeEventListener('select', onSelect);
 
+                drawBoard(controller.matrixWorld, scene, board, sizes);
 
-        setTimeout(() => {
-            animationState.acceptNext = true;
-        }, 2 * 1000)
-        //controller.removeEventListener('select', onSelect);
-        //reticle.visible =   false;
-        //    }
-        // }
+                setTimeout(() => {
+                    animationState.acceptNext = true;
+                }, 2 * 1000)
+            }
+        }
 
         controller = renderer.xr.getController(0);
-        // controller.addEventListener('select', onSelect);
+        controller.addEventListener('select', onSelect);
         scene.add(controller);
 
         window.addEventListener('resize', onWindowResize);
@@ -136,32 +136,30 @@
 
     function render(timestamp, frame) {
 
-        if (!placed) {
-            if (frame) {
-                const referenceSpace = renderer.xr.getReferenceSpace();
-                const session = renderer.xr.getSession();
-                if (hitTestSourceRequested === false) {
-                    session.requestReferenceSpace('viewer').then(function (referenceSpace) {
-                        session.requestHitTestSource({space: referenceSpace}).then(function (source) {
-                            hitTestSource = source;
-                        });
+        if (!placed && frame) {
+            const referenceSpace = renderer.xr.getReferenceSpace();
+            const session = renderer.xr.getSession();
+            if (hitTestSourceRequested === false) {
+                session.requestReferenceSpace('viewer').then(function (referenceSpace) {
+                    session.requestHitTestSource({space: referenceSpace}).then(function (source) {
+                        hitTestSource = source;
                     });
-                    session.addEventListener('end', function () {
-                        hitTestSourceRequested = false;
-                        hitTestSource = null;
-                    });
-                    hitTestSourceRequested = true;
-                }
+                });
+                session.addEventListener('end', function () {
+                    hitTestSourceRequested = false;
+                    hitTestSource = null;
+                });
+                hitTestSourceRequested = true;
+            }
 
-                if (hitTestSource) {
-                    const hitTestResults = frame.getHitTestResults(hitTestSource);
-                    if (hitTestResults.length) {
-                        const hit = hitTestResults[0];
-                        reticle.visible = true;
-                        reticle.matrix.fromArray(hit.getPose(referenceSpace).transform.matrix);
-                    } else {
-                        reticle.visible = false;
-                    }
+            if (hitTestSource) {
+                const hitTestResults = frame.getHitTestResults(hitTestSource);
+                if (hitTestResults.length) {
+                    const hit = hitTestResults[0];
+                    reticle.visible = true;
+                    reticle.matrix.fromArray(hit.getPose(referenceSpace).transform.matrix);
+                } else {
+                    reticle.visible = false;
                 }
             }
         }
@@ -172,9 +170,6 @@
     function animate() {
         renderer.setAnimationLoop(render);
     }
-
-
-
 
 </script>
 </body>

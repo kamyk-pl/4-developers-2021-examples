@@ -188,13 +188,13 @@ function buildKnight(options) {
 }
 
 
-function drawBoard(pos, scene, board , options) {
+function drawBoard(matrixWorld, scene, board, options) {
     function isWhite(x, z) {
         return (x + z) % 2;
     }
 
-    const {height, width, depth, gap } = options
-    const {pawnArray, xDesc, zDesc, numberX, numberZ } = board
+    const {height, width, depth, gap} = options
+    const {pawnArray, xDesc, zDesc, numberX, numberZ} = board
 
     const pawnHeight = 0.04;
     const kingHeight = 0.095;
@@ -222,7 +222,7 @@ function drawBoard(pos, scene, board , options) {
     const knightBlack = buildKnight({material: 'black', height: knightHeight});
     const knightWhite = buildKnight({material: 'white', height: knightHeight});
     const cubeWhite = buildCube({...options, material: 'white'})
-    const cubeBlack = buildCube({...options, material: 'black' })
+    const cubeBlack = buildCube({...options, material: 'black'})
 
     let pawn;
     let offsetX = (numberX * width + (numberX - 1) * gap) / 2 - width / 2;
@@ -233,8 +233,8 @@ function drawBoard(pos, scene, board , options) {
             item.position.set(offsetX, 0, offsetZ);
             scene.add(item);
 //------------------------------------------------------------------------------------------------------
-            if (xDesc[countX] == '1') {
-                if (zDesc[countZ] == 'a' || zDesc[countZ] == 'h') {
+            if (xDesc[countX] === '1') {
+                if (zDesc[countZ] === 'a' || zDesc[countZ] === 'h') {
                     pawn = rockWhite.clone();
                     pawn.name = zDesc[countZ] + xDesc[countX]
                     pawn.delta = rockDeltaY
@@ -243,7 +243,7 @@ function drawBoard(pos, scene, board , options) {
                     pawn.position.x = item.position.x;
                     pawn.position.y = item.position.y + rockDeltaY;
                     pawn.position.z = item.position.z;
-                } else if (zDesc[countZ] == 'b' || zDesc[countZ] == 'g') {
+                } else if (zDesc[countZ] === 'b' || zDesc[countZ] === 'g') {
                     pawn = knightWhite.clone();
                     pawn.name = zDesc[countZ] + xDesc[countX]
                     pawn.delta = knightDeltaY
@@ -252,7 +252,7 @@ function drawBoard(pos, scene, board , options) {
                     pawn.position.x = item.position.x;
                     pawn.position.y = item.position.y + knightDeltaY;
                     pawn.position.z = item.position.z;
-                } else if (zDesc[countZ] == 'c' || zDesc[countZ] == 'f') {
+                } else if (zDesc[countZ] === 'c' || zDesc[countZ] === 'f') {
                     pawn = bishopWhite.clone();
                     pawn.name = zDesc[countZ] + xDesc[countX]
                     pawn.delta = bishopDeltaY
@@ -261,7 +261,7 @@ function drawBoard(pos, scene, board , options) {
                     pawn.position.x = item.position.x;
                     pawn.position.y = item.position.y + bishopDeltaY;
                     pawn.position.z = item.position.z;
-                } else if (zDesc[countZ] == 'd') {
+                } else if (zDesc[countZ] === 'd') {
                     pawn = queenWhite.clone();
                     pawn.name = zDesc[countZ] + xDesc[countX]
                     pawn.delta = queenDeltaY
@@ -270,7 +270,7 @@ function drawBoard(pos, scene, board , options) {
                     pawn.position.x = item.position.x;
                     pawn.position.y = item.position.y + queenDeltaY;
                     pawn.position.z = item.position.z;
-                } else if (zDesc[countZ] == 'e') {
+                } else if (zDesc[countZ] === 'e') {
                     pawn = kingWhite.clone();
                     pawn.name = zDesc[countZ] + xDesc[countX]
                     pawn.delta = kingDeltaY
@@ -282,7 +282,7 @@ function drawBoard(pos, scene, board , options) {
 
                 }
             }
-            if (xDesc[countX] == '2') {
+            if (xDesc[countX] === '2') {
                 pawn = pawnWhite.clone();
                 pawn.name = zDesc[countZ] + xDesc[countX]
                 pawn.delta = pawnDeltaY
@@ -293,7 +293,7 @@ function drawBoard(pos, scene, board , options) {
                 pawn.position.y = item.position.y + pawnDeltaY;
                 pawn.position.z = item.position.z;
             }
-            if (xDesc[countX] == '7') {
+            if (xDesc[countX] === '7') {
                 pawn = pawnBlack.clone();
                 pawn.name = zDesc[countZ] + xDesc[countX]
                 pawn.delta = pawnDeltaY
@@ -304,8 +304,8 @@ function drawBoard(pos, scene, board , options) {
                 pawn.position.y = item.position.y + pawnDeltaY;
                 pawn.position.z = item.position.z;
             }
-            if (xDesc[countX] == '8') {
-                if (zDesc[countZ] == 'a' || zDesc[countZ] == 'h') {
+            if (xDesc[countX] === '8') {
+                if (zDesc[countZ] === 'a' || zDesc[countZ] === 'h') {
                     pawn = rockBlack.clone();
                     pawn.name = zDesc[countZ] + xDesc[countX]
                     pawn.delta = rockDeltaY
@@ -314,7 +314,7 @@ function drawBoard(pos, scene, board , options) {
                     pawn.position.x = item.position.x;
                     pawn.position.y = item.position.y + rockDeltaY;
                     pawn.position.z = item.position.z;
-                } else if (zDesc[countZ] == 'b' || zDesc[countZ] == 'g') {
+                } else if (zDesc[countZ] === 'b' || zDesc[countZ] === 'g') {
                     pawn = knightBlack.clone();
                     pawn.name = zDesc[countZ] + xDesc[countX]
                     pawn.delta = knightDeltaY
@@ -323,7 +323,7 @@ function drawBoard(pos, scene, board , options) {
                     pawn.position.x = item.position.x;
                     pawn.position.y = item.position.y + knightDeltaY;
                     pawn.position.z = item.position.z;
-                } else if (zDesc[countZ] == 'c' || zDesc[countZ] == 'f') {
+                } else if (zDesc[countZ] === 'c' || zDesc[countZ] === 'f') {
                     pawn = bishopBlack.clone();
                     pawn.name = zDesc[countZ] + xDesc[countX]
                     pawn.delta = bishopDeltaY
@@ -332,7 +332,7 @@ function drawBoard(pos, scene, board , options) {
                     pawn.position.x = item.position.x;
                     pawn.position.y = item.position.y + bishopDeltaY;
                     pawn.position.z = item.position.z;
-                } else if (zDesc[countZ] == 'd') {
+                } else if (zDesc[countZ] === 'd') {
                     pawn = queenBlack.clone();
                     pawn.name = zDesc[countZ] + xDesc[countX]
                     pawn.delta = queenDeltaY
@@ -342,7 +342,7 @@ function drawBoard(pos, scene, board , options) {
                     pawn.position.y = item.position.y + queenDeltaY;
                     pawn.position.z = item.position.z;
 
-                } else if (zDesc[countZ] == 'e') {
+                } else if (zDesc[countZ] === 'e') {
                     pawn = kingBlack.clone();
                     pawn.name = zDesc[countZ] + xDesc[countX]
                     pawn.delta = kingDeltaY
@@ -357,26 +357,21 @@ function drawBoard(pos, scene, board , options) {
         }
         offsetX -= width + gap;
     }
-
-    //   scene.position.setFromMatrixPosition(pos);
-    scene.position.z = scene.position.z - 2;
-    scene.rotation.x = Math.PI / 6
-
-    //scene.position.set( 0, 3, -3 ).applyMatrix4( controller.matrixWorld );
-    // scene.rotation.z = Math.PI ;
+    scene.position.set( 0, 0.0, -2.5 ).applyMatrix4( matrixWorld );
+    scene.rotation.z = Math.PI
 
 }
 
-function movePawns(animationState, scene, board,  sizes) {
-    let deltaStep,  sinus;
-    const {amplitude, width, height, depth, gap} = sizes;
+function movePawns(animationState, scene, board, sizes) {
+    let deltaStep, sinus;
+    const {amplitude, width,  depth, gap} = sizes;
     const {pawnArray, xDesc, zDesc, numberX, numberZ} = board;
 
 
     if (animationState.acceptNext) {
         animationState.acceptNext = false
         animationState.moveIndex += 1
-        if (animationState.moveIndex == Moves.length) {
+        if (animationState.moveIndex === Moves.length) {
             animationState.acceptNext = false;
         } else {
             animationState.coordFrom = Moves[animationState.moveIndex].move.substring(0, 2)
@@ -388,11 +383,8 @@ function movePawns(animationState, scene, board,  sizes) {
             animationState.coordZindexFrom = zDesc.indexOf(animationState.coordFrom.substring(0, 1))
             animationState.coordZindexTo = zDesc.indexOf(animationState.coordTo.substring(0, 1));
 
-            (animationState.coordXindexTo == animationState.coordXindexFrom) ? animationState.signX = 0 : (animationState.coordXindexTo > animationState.coordXindexFrom) ? animationState.signX = -1 : animationState.signX = 1;
-            (animationState.coordZindexTo == animationState.coordZindexFrom) ? animationState.signZ = 0 : (animationState.coordZindexTo > animationState.coordZindexFrom) ? animationState.signZ = -1 : animationState.signZ = 1;
-
-            let adjustX = ((Math.abs(animationState.coordXindexTo - animationState.coordXindexFrom)) * (0.1 * width + gap))
-            let adjustZ = ((Math.abs(animationState.coordZindexTo - animationState.coordZindexFrom)) * (0.1 * depth + gap))
+            (animationState.coordXindexTo === animationState.coordXindexFrom) ? animationState.signX = 0 : (animationState.coordXindexTo > animationState.coordXindexFrom) ? animationState.signX = -1 : animationState.signX = 1;
+            (animationState.coordZindexTo === animationState.coordZindexFrom) ? animationState.signZ = 0 : (animationState.coordZindexTo > animationState.coordZindexFrom) ? animationState.signZ = -1 : animationState.signZ = 1;
 
             animationState.xStart = (numberX * width + (numberX - 1) * gap) / 2 - width / 2 - animationState.coordXindexFrom * (width + gap);
             animationState.zStart = (numberZ * depth + (numberZ - 1) * gap) / 2 - depth / 2 - animationState.coordZindexFrom * (depth + gap);
@@ -414,13 +406,13 @@ function movePawns(animationState, scene, board,  sizes) {
         }
     }
     pawnArray.forEach(pawn => {
-        if (pawn.name == animationState.coordFrom) {
+        if (pawn.name === animationState.coordFrom) {
             if (animationState.acceptUp) {
                 deltaStep = 0.05;
                 animationState.step += deltaStep;
                 sinus = Math.sin(animationState.step);
                 pawn.position.y = amplitude * sinus + pawn.delta
-                if (Math.abs(animationState.step - Math.PI) <animationState.step) {
+                if (Math.abs(animationState.step - Math.PI) < animationState.step) {
                     animationState.acceptUp = false
                     sinus = 1
                     animationState.step = 0
@@ -450,7 +442,6 @@ function movePawns(animationState, scene, board,  sizes) {
                     animationState.acceptForward = false
                     animationState.step = 0
                     animationState.acceptDown = true
-
 
 
                 }
