@@ -4,17 +4,26 @@
     <meta charset="UTF-8">
     <title>Let's invite A(R)lice from Wonderland to our browsers</title>
     <style>
-        body{
+        body {
             width: 1024px;
         }
 
-        h1,h3 {
+        h1, h3 {
             text-align: center;
         }
 
-        a, a:visited, a:active{
+        a, a:visited, a:active {
             text-decoration: none;
             color: black;
+        }
+
+        .code-link{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .code-link img {
+            margin-left: 15px;
         }
 
         ul {
@@ -32,59 +41,62 @@
             text-align: center;
             border-radius: 10px;
         }
+
         ul li a {
             padding: 10px;
             background-repeat: no-repeat;
-            background-size: contain; ;
+            background-size: contain;;
             background-position: center 30px;
             display: inline-block;
             width: 250px;
             height: 250px;
         }
 
-        ul :nth-child(1) a{
+        ul :nth-child(1) a {
             background-image: url("/images/1book1.jpg");
         }
 
-        ul :nth-child(2) a{
+        ul :nth-child(2) a {
             background-image: url("/images/1book2.jpg");
         }
 
-        ul :nth-child(3) a{
+        ul :nth-child(3) a {
             background-image: url("/images/1book3.jpg");
         }
 
-        ul :nth-child(4) a{
+        ul :nth-child(4) a {
             background-image: url("/images/1book5.jpg");
         }
 
-        ul :nth-child(5) a{
+        ul :nth-child(5) a {
             background-image: url("/images/1book8.jpg");
         }
 
-        ul :nth-child(6) a{
+        ul :nth-child(6) a {
             background-image: url("/images/1book9.jpg");
         }
 
-        ul :nth-child(7) a{
+        ul :nth-child(7) a {
             background-image: url("/images/1book25.jpg");
         }
 
-        ul :nth-child(8) a{
+        ul :nth-child(8) a {
             background-image: url("/images/1book27.jpg");
         }
 
-        ul :nth-child(9) a{
+        ul :nth-child(9) a {
             background-image: url("/images/1book29.jpg");
         }
 
-        ul :nth-child(10) a{
+        ul :nth-child(10) a {
             background-image: url("/images/1book36.jpg");
         }
-        ul :nth-child(11) a{
+
+        ul :nth-child(11) a {
             background-image: url("/images/1book22.jpg");
         }
-        ul :nth-child(12) a{
+
+        ul :nth-child(12) a {
             background-image: url("/images/1book41.jpg");
         }
     </style>
@@ -94,7 +106,11 @@
     Let's invite A(R)lice from Wonderland to our browsers
 </h1>
 <div class="wrapper">
-    <h3>Examples</h3>
+    <h3>Examples  </h3>
+    <div class="code-link"> Code @<a href="https://github.com/kamyk-pl/4-developers-2021-examples">
+        <img src="images/GitHub-Mark-32px.png" alt="Github link">
+    </a>
+    </div>
     <ul>
         <li><a href="01.html">01-Pure Web XR</a></li>
         <li><a href="02.html">02-My first Three.js AR example</a></li>
@@ -110,6 +126,8 @@
         <li><a href="chess.html">Chess</a></li>
 
     </ul>
+
+
 </div>
 
 </body>
