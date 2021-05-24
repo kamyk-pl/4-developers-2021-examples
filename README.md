@@ -3,6 +3,8 @@
 This repo contains examples from my talk *Let's invite A(R)lice from Wonderland to our browsers* 
 which were presented during [4developers 2021](https://4developers.org.pl/) conference.
 
+Presentation can be found [here](https://kamyk-pl.github.io/4-developers-alice/index.html#/title-0)
+
 Examples below are written in "demo mode", please not treat as a reference for production ready solution.
 Main and only goal of those examples is to show how easy is to start with AR in JavaScript.
 
