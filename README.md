@@ -1,6 +1,6 @@
 # Let's invite A(R)lice from Wonderland to our browsers #
 
-This repo contains slides and examples of may talk *Let's invite A(R)lice from Wonderland to our browsers* 
+This repo contains examples from my talk *Let's invite A(R)lice from Wonderland to our browsers* 
 which were presented during [4developers 2021](https://4developers.org.pl/) conference.
 
 Examples below are written in "demo mode", please not treat as a reference for production ready solution.
