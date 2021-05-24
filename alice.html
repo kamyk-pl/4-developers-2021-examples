@@ -32,6 +32,26 @@
 
     let cat, alice, tree, adjusted;
 
+    const aliceText = [
+        new THREE.MeshPhongMaterial({map: new THREE.TextureLoader().load('res/where.png')}),
+        new THREE.MeshPhongMaterial({map: new THREE.TextureLoader().load('res/hi.png')}),
+        new THREE.MeshPhongMaterial({color: 0xffffff}),
+        new THREE.MeshBasicMaterial({color: 0xffffff}),
+        new THREE.MeshPhongMaterial({map: new THREE.TextureLoader().load('res/magic.png')}),
+        new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load('res/am.png')}),
+    ]
+    const catText = [
+        new THREE.MeshPhongMaterial({map: new THREE.TextureLoader().load('res/alice.png')}),
+        new THREE.MeshPhongMaterial({map: new THREE.TextureLoader().load('res/4dev.png')}),
+        new THREE.MeshBasicMaterial({color: 0xffffff}),
+        new THREE.MeshBasicMaterial({color: 0xffffff}),
+        new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load('res/have.png')}),
+        new THREE.MeshPhongMaterial({map: new THREE.TextureLoader().load('res/you.png')}),
+
+    ]
+
+    let cubes = [];
+
     init();
     animate();
 
@@ -79,6 +99,9 @@
     }
 
     function render() {
+        cubes.forEach((c) => {
+            c.rotation.y = c.rotation.y - Math.PI / 300
+        });
 
         if (cat && alice && tree && !adjusted) {
             scene.add(tree);
@@ -91,6 +114,11 @@
                 emissive: 0x0,
                 fog: true
             });
+
+            addCube(aliceText, 1.2, 2.3, 2.3)
+
+            setTimeout(() => addCube(catText, 2.3, 3.6, 2), 16 * 1000)
+
 
             const cubeGeometry = new THREE.BoxGeometry(150, 150, 0.01);
             const ground = new THREE.Mesh(cubeGeometry, groundColor);
@@ -137,6 +165,20 @@
             },
             (xhr) => console.log((xhr.loaded / xhr.total * 100) + '% loaded'),
             (e) => console.error(e));
+    }
+
+
+    function addCube(materials, x, y, z) {
+
+        const cube = new THREE.Mesh(new THREE.BoxBufferGeometry(0.3, 0.3, 0.3), materials);
+        cube.position.set(x, y, z);
+        cube.rotation.y =  Math.PI/2;
+        cubes.push(cube);
+        setTimeout(() => {
+            cubes = cubes.filter(c => c !== cube);
+            scene.remove(cube)
+        }, 15 * 1000)
+        scene.add(cube);
     }
 </script>
 </body>
