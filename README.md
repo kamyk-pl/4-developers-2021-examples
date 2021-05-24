@@ -3,11 +3,8 @@
 This repo contains slides and examples of may talk *Let's invite A(R)lice from Wonderland to our browsers* 
 which were presented during [4developers 2021](https://4developers.org.pl/) conference.
 
-TODO!!
-This 
-Please do not treat this repo as a golden bullet referece for Augmented Reality projects
-
-TODO!!
+Examples below are written in "demo mode", please not treat as a reference for production ready solution.
+Main and only goal of those examples is to show how easy is to start with AR in JavaScript.
 
 
 ## Examples ##
@@ -25,10 +22,14 @@ All credits goes to tutorial authors
 
 Example with chess present [first game of the Kasparov vs Blue rematch](https://en.wikipedia.org/wiki/Deep_Blue_versus_Garry_Kasparov#Game_1_2)
  
-All credits to Chess animation goes to my dad Marcin Kaminski. THANK YOU DAD!!!
+All credits to Chess animation goes to my dad Marcin Kamiński. THANK YOU DAD!!!
 
 ## Run Examples ##
-TODO
+Examples can be tested [here](https://kamyk-pl.github.io/4-developers-2021-examples/index.html),
+
+or locally.
+
+To run example locally run following commands.
 ` 
 npm install
 `
@@ -42,7 +43,7 @@ npm run serve
 Remember that your mobile device and your computer have to be in the same Wi-Fi network.
 Some time you have to also adjust Windows firewall settings.
 
-AR experiece requies *https*  connection. Dummy certificate is commited in repo which helps you with local deployment.
+AR experience requires *https*  connection. Dummy certificate is committed in the repo which helps you with local deployment.
 You will have to accept this certificate in the browser.
 
 ### Used models ### 
