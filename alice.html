@@ -18,7 +18,7 @@
 
 <div id="info">
     <h3>Alice in Wonderland in your browser</h3>
-    <a href="/">Back</a>
+    <a href="index.html">Back</a>
 </div>
 
 <script type="module">
@@ -41,13 +41,12 @@
         new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load('res/am.png')}),
     ]
     const catText = [
+        new THREE.MeshPhongMaterial({map: new THREE.TextureLoader().load('res/alice.png')}),
+        new THREE.MeshPhongMaterial({map: new THREE.TextureLoader().load('res/you.png')}),
+        new THREE.MeshBasicMaterial({color: 0xffffff}),
+        new THREE.MeshBasicMaterial({color: 0xffffff}),
         new THREE.MeshPhongMaterial({map: new THREE.TextureLoader().load('res/4dev.png')}),
         new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load('res/have.png')}),
-        new THREE.MeshBasicMaterial({color: 0x000000}),
-        new THREE.MeshBasicMaterial({color: 0x000000}),
-        new THREE.MeshBasicMaterial({color: 0x000000}),
-        new THREE.MeshPhongMaterial({map: new THREE.TextureLoader().load('res/you.png')}),
-        new THREE.MeshPhongMaterial({map: new THREE.TextureLoader().load('res/alice.png')}),
 
     ]
 
