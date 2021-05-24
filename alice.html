@@ -41,12 +41,13 @@
         new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load('res/am.png')}),
     ]
     const catText = [
-        new THREE.MeshPhongMaterial({map: new THREE.TextureLoader().load('res/alice.png')}),
         new THREE.MeshPhongMaterial({map: new THREE.TextureLoader().load('res/4dev.png')}),
-        new THREE.MeshBasicMaterial({color: 0xffffff}),
-        new THREE.MeshBasicMaterial({color: 0xffffff}),
         new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load('res/have.png')}),
+        new THREE.MeshBasicMaterial({color: 0x000000}),
+        new THREE.MeshBasicMaterial({color: 0x000000}),
+        new THREE.MeshBasicMaterial({color: 0x000000}),
         new THREE.MeshPhongMaterial({map: new THREE.TextureLoader().load('res/you.png')}),
+        new THREE.MeshPhongMaterial({map: new THREE.TextureLoader().load('res/alice.png')}),
 
     ]
 
@@ -117,7 +118,7 @@
 
             addCube(aliceText, 1.2, 2.3, 2.3)
 
-            setTimeout(() => addCube(catText, 2.3, 3.6, 2), 16 * 1000)
+            setTimeout(() => addCube(catText, 2.3, 3.6, 2), 18 * 1000)
 
 
             const cubeGeometry = new THREE.BoxGeometry(150, 150, 0.01);
@@ -177,7 +178,7 @@
         setTimeout(() => {
             cubes = cubes.filter(c => c !== cube);
             scene.remove(cube)
-        }, 15 * 1000)
+        }, 17 * 1000)
         scene.add(cube);
     }
 </script>
